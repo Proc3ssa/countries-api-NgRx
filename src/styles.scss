@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+// Global styles
+html, body {
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s; // Smooth transition
+}
+
+body.light-theme, html.light-theme {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+body.dark-theme, html.dark-theme {
+  background-color: #333 !important;
+  color: #fff !important;
+}

@@ -21,8 +21,9 @@ export class CountryListComponent implements OnInit {
   searchQuery: string = '';
   filterRegion: string = '';
   private countries: Country[] = []; // Store the raw countries data
+  isDarkTheme: boolean = false; // Theme state
 
-  constructor(private countryApiService: CountryApiService, private router : Router) {}
+  constructor(private countryApiService: CountryApiService, private router: Router) {}
 
   ngOnInit() {
     this.loading = true;
@@ -67,6 +68,14 @@ export class CountryListComponent implements OnInit {
   }
 
   onCountrySelect(country: Country) {
-  this.router.navigate(['country', country.cca3]);
+    this.router.navigate(['country', country.cca3]);
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    console.log('Toggling theme to:', this.isDarkTheme ? 'dark-theme' : 'light-theme'); // Debug log
+    document.body.className = ''; // Clear existing classes
+    document.body.classList.add(this.isDarkTheme ? 'dark-theme' : 'light-theme'); // Add new class
+    console.log('Body classes after toggle:', document.body.className); // Additional debug
   }
 }

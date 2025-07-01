@@ -4,12 +4,12 @@ import { CountryApiService } from '../../services/country-api.service';
 import { Country } from '../../models/country.model';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-country-details',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule],
   templateUrl: './country-details.component.html',
   styleUrls: ['./country-details.component.scss']
 })
@@ -20,18 +20,22 @@ export class CountryDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private countryApiService: CountryApiService) {}
 
   ngOnInit() {
-    const code = this.route.snapshot.paramMap.get('cca3');
+    const code = this.route.snapshot.paramMap.get('code');
+    console.log('Fetching country with code:', code); // Debug log for route parameter
     if (code) {
       this.country$ = this.countryApiService.getCountryByCode(code).pipe(
-  
         catchError(error => {
           console.error('Error fetching country details:', error);
           this.error = 'Failed to load country details';
-          return of({} as Country);
+          return of({} as Country); // Return empty object on error
         })
       );
-
-      console.table(this.country$);
+      this.country$.subscribe(country => {
+        console.log('Received country data:', country); // Debug log for received data
+      });
+    } else {
+      this.error = 'No country code provided';
+      console.error('No code found in route parameters');
     }
   }
 
