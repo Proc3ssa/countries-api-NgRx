@@ -20,15 +20,18 @@ export class CountryDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private countryApiService: CountryApiService) {}
 
   ngOnInit() {
-    const code = this.route.snapshot.paramMap.get('code');
+    const code = this.route.snapshot.paramMap.get('cca3');
     if (code) {
       this.country$ = this.countryApiService.getCountryByCode(code).pipe(
+  
         catchError(error => {
           console.error('Error fetching country details:', error);
           this.error = 'Failed to load country details';
           return of({} as Country);
         })
       );
+
+      console.table(this.country$);
     }
   }
 

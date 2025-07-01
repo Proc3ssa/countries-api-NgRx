@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Country } from '../../models/country.model';
 import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-country-list',
@@ -21,7 +22,7 @@ export class CountryListComponent implements OnInit {
   filterRegion: string = '';
   private countries: Country[] = []; // Store the raw countries data
 
-  constructor(private countryApiService: CountryApiService) {}
+  constructor(private countryApiService: CountryApiService, private router : Router) {}
 
   ngOnInit() {
     this.loading = true;
@@ -66,6 +67,6 @@ export class CountryListComponent implements OnInit {
   }
 
   onCountrySelect(country: Country) {
-    console.log('Selected country:', country.name);
+  this.router.navigate(['country', country.cca3]);
   }
 }
