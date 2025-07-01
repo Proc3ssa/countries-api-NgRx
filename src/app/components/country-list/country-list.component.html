@@ -8,16 +8,17 @@
     <option value="Europe">Europe</option>
     <option value="Oceania">Oceania</option>
   </select>
-  <div *ngIf="loading$ | async">Loading...</div>
-  <div *ngIf="error$ | async as error" class="error">{{ error || 'An error occurred' }}</div>
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
   <div class="country-list" *ngIf="filteredCountries?.length">
+
     <div *ngFor="let country of filteredCountries" (click)="onCountrySelect(country)" class="country-card">
-      <img [src]="'https://flagcdn.com/w320/' + country.alpha3Code.toLowerCase() + '.png'" alt="{{ country.name }} flag" />
-      <h3>{{ country.name }}</h3>
+      <img [src]="country.flags.png" alt="{{ country.name }} flag" />
+      <h3>{{ country.name.common }}</h3>
       <p>Population: {{ country.population }}</p>
       <p>Region: {{ country.region }}</p>
       <p>Capital: {{ country.capital }}</p>
     </div>
   </div>
-  <div *ngIf="!(loading$ | async) && !filteredCountries?.length" class="no-results">No countries found.</div>
+  <div *ngIf="!loading && !filteredCountries?.length" class="no-results">No countries found.</div>
 </div>

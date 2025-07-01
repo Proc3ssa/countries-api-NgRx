@@ -12,8 +12,7 @@ export class CountryApiService {
   constructor(private http: HttpClient) {}
 
   getAllCountries(): Observable<Country[]> {
-    // Limit fields to match Figma/HTML design: name, population, region, capital, alpha3Code (for flag)
-    return this.http.get<Country[]>(`${this.apiUrl}/all?fields=name,population,region,capital,alpha3Code`).pipe(
+    return this.http.get<Country[]>(`${this.apiUrl}/independent?status=true`).pipe(
       catchError(error => {
         console.error('Error fetching countries:', error);
         return of([]);
