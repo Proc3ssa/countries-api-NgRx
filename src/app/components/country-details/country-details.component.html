@@ -1,0 +1,18 @@
+<div *ngIf="error" class="error">{{ error }}</div>
+<div *ngIf="country$ | async as country" class="details">
+  <img [src]="country.flags?.png" alt="{{ country.name.common }} flag" />
+  <h2>{{ country.name.common }} ({{ country.name.official }})</h2>
+  <p><strong>Native Name:</strong> {{ getNativeName(country) }}</p>
+  <p><strong>Population:</strong> {{ country.population | number }}</p>
+  <p><strong>Region:</strong> {{ country.region }}</p>
+  <p><strong>Subregion:</strong> {{ country.subregion }}</p>
+  <p><strong>Capital:</strong> {{ country.capital[0] || 'N/A' }}</p>
+  <p><strong>Area:</strong> {{ country.area | number }} km²</p>
+  <p><strong>Demonym:</strong> {{ country.demonyms?.eng?.f || 'N/A' }}</p>
+  <p><strong>Currencies:</strong> {{ getCurrencyNames(country.currencies) || 'N/A' }}</p>
+  <p><strong>Languages:</strong> {{ getLanguageNames(country.languages) || 'N/A' }}</p>
+  <p><strong>Borders:</strong> {{ country.borders?.length ? country.borders.join(', ') : 'None' }}</p>
+  <p><strong>Timezones:</strong> {{ country.timezones?.join(', ') || 'N/A' }}</p>
+</div>
+
+<button (click)="goBack()">Back</button>
