@@ -1,5 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-// Global styles
+@import './variables';
+@import './mixin';
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700&display=swap');
+
+
+
+body {
+  font-family: 'Nunito Sans', Arial, Helvetica, sans-serif;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -7,11 +15,30 @@ html, body {
 }
 
 body.light-theme, html.light-theme {
-  background-color: #fff !important;
+  background-color: $body-bg-light;
   color: #000 !important;
+
+  select{
+    background-color: $header-bg-light;
+  }
+
+  header{
+    background-color: $header-bg-light;
+    color: #000;
+  }
 }
 
 body.dark-theme, html.dark-theme {
-  background-color: #333 !important;
+  background-color: $body-bg-dark;
   color: #fff !important;
+
+  header{
+    background-color: $header-bg-dark;
+    color: #fff;
+  }
+
+  select{
+    background-color: $header-bg-dark;
+  }
+
 }

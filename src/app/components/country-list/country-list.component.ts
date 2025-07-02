@@ -25,6 +25,8 @@ export class CountryListComponent implements OnInit {
 
   constructor(private countryApiService: CountryApiService, private router: Router) {}
 
+  toggleClass = "fa-regular fa-moon";
+
   ngOnInit() {
     this.loading = true;
     this.countries$ = this.countryApiService.getAllCountries().pipe(
@@ -73,9 +75,10 @@ export class CountryListComponent implements OnInit {
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
-    console.log('Toggling theme to:', this.isDarkTheme ? 'dark-theme' : 'light-theme'); // Debug log
-    document.body.className = ''; // Clear existing classes
-    document.body.classList.add(this.isDarkTheme ? 'dark-theme' : 'light-theme'); // Add new class
-    console.log('Body classes after toggle:', document.body.className); // Additional debug
+    document.body.className = ''; 
+    document.body.classList.add(this.isDarkTheme ? 'dark-theme' : 'light-theme'); 
+
+   
+
   }
 }
