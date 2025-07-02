@@ -6,11 +6,13 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-country-details',
   standalone: true,
-  imports: [CommonModule, HeaderComponent],
+  imports: [CommonModule, HeaderComponent, RouterLink],
   templateUrl: './country-details.component.html',
   styleUrls: ['./country-details.component.scss']
 })
@@ -18,7 +20,7 @@ export class CountryDetailsComponent implements OnInit {
   country$: Observable<Country> = of({} as Country);
   error: string | null = null;
 
-  constructor(private route: ActivatedRoute, private countryApiService: CountryApiService) {}
+  constructor(private route: ActivatedRoute,private router: Router ,private countryApiService: CountryApiService) {}
 
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
@@ -58,5 +60,13 @@ export class CountryDetailsComponent implements OnInit {
 
   goBack() {
     window.history.back();
+  }
+
+  navigate(cca3: string){
+
+  this.router.navigate(['/country', cca3]);
+
+  //  alert(cca3);
+
   }
 }

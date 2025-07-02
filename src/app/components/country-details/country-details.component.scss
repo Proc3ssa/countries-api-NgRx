@@ -1,14 +1,18 @@
+@import '../../../mixin';
+@import '../../../variables';
 
 
 .details {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
+  margin-top: 50px;
+  width: 90%;
+  max-width: 1278px;
+  @include align-space-between;
+  margin-inline: auto;
+  flex-wrap: wrap;
 
   img {
     width: 100%;
-    height: auto;
+    height: 405px;
   }
 
   p {
@@ -22,15 +26,36 @@
 }
 
 button {
-  display: block;
+  
   margin: 20px auto;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
   border: none;
   cursor: pointer;
+  background-color: transparent;
 
-  &:hover {
-    background-color: #0056b3;
-  }
+ 
+}
+
+.flagBox{
+  width: 50%;
+
+}
+
+.data{
+ 
+  width: 40%;
+}
+.parts{
+ display: flex;
+ justify-content: space-between;
+}
+
+.borders >*{
+
+  margin-right: 10px;
+}
+
+.borders button{
+  box-shadow: 1px 4px 5px rgba(128, 128, 128, 0.186);
+  border-radius: 5px;
 }
