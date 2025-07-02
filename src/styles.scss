@@ -22,19 +22,28 @@ body.light-theme, html.light-theme {
     background-color: $header-bg-light;
   }
 
-  header{
+  header, .country-card, .search, input, select, .themetoggle button{
     background-color: $header-bg-light;
     color: #000;
+
+    &::placeholder{
+      color: gray;
+    }
   }
+ 
 }
 
 body.dark-theme, html.dark-theme {
   background-color: $body-bg-dark;
   color: #fff !important;
 
-  header{
+  header, .country-card, .search, input, select, .themetoggle button{
     background-color: $header-bg-dark;
     color: #fff;
+
+    &::placeholder{
+      color: white;
+    }
   }
 
   select{

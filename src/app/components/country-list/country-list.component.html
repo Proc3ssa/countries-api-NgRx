@@ -23,7 +23,7 @@
     <input type="text" (input)="onSearch($event)" placeholder="Search for a country..." />
 
   </div>
-  
+
     <select (change)="onFilter($event)">
     <option value="">All Regions</option>
     <option value="Africa">Africa</option>
@@ -39,15 +39,21 @@
 
   <div *ngIf="loading">Loading...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
+
+
   <div class="country-list" *ngIf="filteredCountries?.length">
     
     <div *ngFor="let country of filteredCountries" (click)="onCountrySelect(country)" class="country-card">
       
       <img [src]="country.flags.png" alt="{{ country.name }} flag" />
+
+      <div class="data">
       <h3>{{ country.name.common }}</h3>
-      <p>Population: {{ country.population }}</p>
-      <p>Region: {{ country.region }}</p>
-      <p>Capital: {{ country.capital }}</p>
+      <p><b>Population</b>: {{ country.population }}</p>
+      <p><b>Region:</b> {{ country.region }}</p>
+      <p><b>Capital:</b> {{ country.capital }}</p>
+      </div>
+
     </div>
   </div>
   <div *ngIf="!loading && !filteredCountries?.length" class="no-results">No countries found.</div>
