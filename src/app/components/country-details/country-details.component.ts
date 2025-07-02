@@ -5,11 +5,12 @@ import { Country } from '../../models/country.model';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-country-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './country-details.component.html',
   styleUrls: ['./country-details.component.scss']
 })

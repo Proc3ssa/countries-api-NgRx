@@ -5,11 +5,12 @@ import { Country } from '../../models/country.model';
 import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-country-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './country-list.component.html',
   styleUrls: ['./country-list.component.scss']
 })
@@ -21,11 +22,9 @@ export class CountryListComponent implements OnInit {
   searchQuery: string = '';
   filterRegion: string = '';
   private countries: Country[] = []; // Store the raw countries data
-  isDarkTheme: boolean = false; // Theme state
 
   constructor(private countryApiService: CountryApiService, private router: Router) {}
 
-  toggleClass = "fa-regular fa-moon";
 
   ngOnInit() {
     this.loading = true;
@@ -73,12 +72,4 @@ export class CountryListComponent implements OnInit {
     this.router.navigate(['country', country.cca3]);
   }
 
-  toggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-    document.body.className = ''; 
-    document.body.classList.add(this.isDarkTheme ? 'dark-theme' : 'light-theme'); 
-
-   
-
-  }
 }

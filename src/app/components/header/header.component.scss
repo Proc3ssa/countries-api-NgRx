@@ -1,0 +1,53 @@
+@import '../../../mixin';
+@import '../../../variables';
+
+header{
+  width: 100%;
+  @include align-space-center;
+  box-shadow: 0px 3px 3px rgba(167, 167, 167, 0.359);
+
+  .container{
+    width: 90%;
+   @include align-space-between;
+  }
+
+  button{
+    border:none;
+    background-color: transparent;
+    padding-block: 10px;
+  }
+
+  .themetoggle{
+    border-radius: 5px;
+  @include align-space-between;
+  width: fit-content;
+
+  &:hover {
+    background-color: #d8d9da44;
+  }
+
+ 
+  }
+
+  
+
+
+}
+
+.searchfilter{
+  margin-block: 30px;
+  width: 90%;
+  margin-inline: auto;
+  gap: 10px;
+  @include align-space-between;
+  flex-wrap: wrap;
+
+  @media (max-width: 600px) {
+      
+     
+    }
+
+  
+  
+
+}

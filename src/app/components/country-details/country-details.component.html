@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div *ngIf="error" class="error">{{ error }}</div>
 <div *ngIf="country$ | async as country" class="details">
   <img [src]="country.flags?.png" alt="{{ country.name.common }} flag" />
