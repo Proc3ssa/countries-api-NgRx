@@ -22,7 +22,9 @@ export class CountryDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,private router: Router ,private countryApiService: CountryApiService) {}
 
+
   ngOnInit() {
+
     const code = this.route.snapshot.paramMap.get('code');
     console.log('Fetching country with code:', code); // Debug log for route parameter
     if (code) {
