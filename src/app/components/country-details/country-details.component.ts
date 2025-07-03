@@ -31,7 +31,9 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     this.code = this.route.snapshot.paramMap.get('code');
   }
 
+
   ngOnInit() {
+
     this.subscriptions.add(
       this.selectedCountry$.subscribe(country => {
         if (this.code && !country) {
@@ -43,6 +45,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+
   }
 
   getNativeName(country: Country): string {
