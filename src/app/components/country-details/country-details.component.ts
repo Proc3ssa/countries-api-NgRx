@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CountryApiService } from '../../services/country-api.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { Country } from '../../models/country.model';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { AppState } from '../../store/state.interface';
+import * as actions from '../../store/actions';
+import { selectSelectedCountry, selectLoading, selectError } from '../../store/selectors';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-country-details',
@@ -16,32 +18,34 @@ import { Router } from '@angular/router';
   templateUrl: './country-details.component.html',
   styleUrls: ['./country-details.component.scss']
 })
-export class CountryDetailsComponent implements OnInit {
-  country$: Observable<Country> = of({} as Country);
-  error: string | null = null;
+export class CountryDetailsComponent implements OnInit, OnDestroy {
+  private store = inject(Store<AppState>);
+  private subscriptions: Subscription = new Subscription();
 
-  constructor(private route: ActivatedRoute,private router: Router ,private countryApiService: CountryApiService) {}
+  selectedCountry$: Observable<Country | null> = this.store.select(selectSelectedCountry);
+  loading$: Observable<boolean> = this.store.select(selectLoading);
+  error$: Observable<string | null> = this.store.select(selectError);
+  private code: string | null = null;
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.code = this.route.snapshot.paramMap.get('code');
+  }
 
 
   ngOnInit() {
 
-    const code = this.route.snapshot.paramMap.get('code');
-    console.log('Fetching country with code:', code); // Debug log for route parameter
-    if (code) {
-      this.country$ = this.countryApiService.getCountryByCode(code).pipe(
-        catchError(error => {
-          console.error('Error fetching country details:', error);
-          this.error = 'Failed to load country details';
-          return of({} as Country); // Return empty object on error
-        })
-      );
-      this.country$.subscribe(country => {
-        console.log('Received country data:', country); // Debug log for received data
-      });
-    } else {
-      this.error = 'No country code provided';
-      console.error('No code found in route parameters');
-    }
+    this.subscriptions.add(
+      this.selectedCountry$.subscribe(country => {
+        if (this.code && !country) {
+          this.store.dispatch(actions.loadCountryByCode({ code: this.code }));
+        }
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+
   }
 
   getNativeName(country: Country): string {
@@ -61,14 +65,11 @@ export class CountryDetailsComponent implements OnInit {
   }
 
   goBack() {
-    window.history.back();
+    this.router.navigate(['/']);
   }
 
-  navigate(cca3: string){
-
-  this.router.navigate(['/country', cca3]);
-
-  //  alert(cca3);
-
+  navigate(cca3: string) {
+    this.store.dispatch(actions.loadCountryByCode({ code: cca3 }));
+    this.router.navigate(['/country', cca3]);
   }
 }

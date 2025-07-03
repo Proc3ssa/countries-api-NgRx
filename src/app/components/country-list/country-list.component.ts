@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { CountryApiService } from '../../services/country-api.service';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Country } from '../../models/country.model';
-import { catchError } from 'rxjs/operators';
+import { AppState } from '../../store/state.interface';
+import * as actions from '../../store/actions';
+import { selectCountries, selectLoading, selectError, selectSearchQuery, selectFilterRegion } from '../../store/selectors';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-country-list',
@@ -14,62 +18,54 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './country-list.component.html',
   styleUrls: ['./country-list.component.scss']
 })
-export class CountryListComponent implements OnInit {
-  countries$: Observable<Country[]> = of([]);
-  loading = false;
-  error: string | null = null;
-  filteredCountries: Country[] = [];
-  searchQuery: string = '';
-  filterRegion: string = '';
-  private countries: Country[] = []; // Store the raw countries data
+export class CountryListComponent implements OnInit, OnDestroy {
+  private store = inject(Store<AppState>);
+  private subscriptions: Subscription = new Subscription();
 
-  constructor(private countryApiService: CountryApiService, private router: Router) {}
+  countries$: Observable<Country[]> = this.store.select(selectCountries);
+  loading$: Observable<boolean> = this.store.select(selectLoading);
+  error$: Observable<string | null> = this.store.select(selectError);
+  searchQuery$: Observable<string> = this.store.select(selectSearchQuery);
+  filterRegion$: Observable<string> = this.store.select(selectFilterRegion);
+  filteredCountries$: Observable<Country[]>;
 
-
-  ngOnInit() {
-    this.loading = true;
-    this.countries$ = this.countryApiService.getAllCountries().pipe(
-      catchError(error => {
-        console.error('Error fetching countries:', error);
-        this.error = 'Failed to load countries';
-        this.loading = false;
-        return of([]);
+  constructor(private router: Router) {
+    this.filteredCountries$ = combineLatest([this.countries$, this.searchQuery$, this.filterRegion$]).pipe(
+      map(([countries, searchQuery, filterRegion]) => {
+        let filtered = [...countries];
+        if (searchQuery) {
+          filtered = filtered.filter(country =>
+            country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        }
+        if (filterRegion) {
+          filtered = filtered.filter(country => country.region === filterRegion);
+        }
+        return filtered;
       })
     );
-    this.countries$.subscribe(countries => {
-      this.loading = false;
-      this.countries = countries; // Store the raw data
-      this.filterCountries(this.countries); // Initial filter
-    });
   }
 
-  filterCountries(countries: Country[]) {
-    let filtered = [...countries];
-    if (this.searchQuery) {
-      filtered = filtered.filter(country =>
-        country.name.common.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    }
-    if (this.filterRegion) {
-      filtered = filtered.filter(country => country.region === this.filterRegion);
-    }
-    this.filteredCountries = filtered;
+  ngOnInit() {
+    this.store.dispatch(actions.loadCountries());
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   onSearch(event: Event) {
     const query = (event.target as HTMLInputElement).value;
-    this.searchQuery = query;
-    this.filterCountries(this.countries); // Filter using the stored countries
+    this.store.dispatch(actions.setSearchQuery({ query }));
   }
 
   onFilter(event: Event) {
     const region = (event.target as HTMLSelectElement).value;
-    this.filterRegion = region;
-    this.filterCountries(this.countries); // Filter using the stored countries
+    this.store.dispatch(actions.setFilterRegion({ region }));
   }
 
   onCountrySelect(country: Country) {
+    this.store.dispatch(actions.selectCountry({ country }));
     this.router.navigate(['country', country.cca3]);
   }
-
 }
