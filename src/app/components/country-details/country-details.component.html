@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <div *ngIf="error$ | async as error" class="error">{{ error }}</div>
-<div *ngIf="loading$ | async" class="loading">Loading...</div>
+
 
 <button (click)="goBack()">
   <span style="font-size: 30px; vertical-align: center;">←</span> Back
