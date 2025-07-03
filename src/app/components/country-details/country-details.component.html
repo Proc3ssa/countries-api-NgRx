@@ -1,61 +1,48 @@
 <app-header></app-header>
 
-<div *ngIf="error" class="error">{{ error }}</div>
+<div *ngIf="error$ | async as error" class="error">{{ error }}</div>
+<div *ngIf="loading$ | async" class="loading">Loading...</div>
 
 <button (click)="goBack()">
-  <span style="font-size: 30px; vertical-align: center;">&#8592;</span> Back
+  <span style="font-size: 30px; vertical-align: center;">←</span> Back
 </button>
 
+<div *ngIf="selectedCountry$ | async as country" class="details">
+  <div class="flagBox">
+    <img [src]="country.flags?.png" alt="{{ country.name.common }} flag" />
+  </div>
 
-<div *ngIf="country$ | async as country" class="details">
-
-<div class="flagBox">
-  
-
-  <img [src]="country.flags?.png" alt="{{ country.name.common }} flag" />
-</div>
-
-
-<div class="data">
+  <div class="data">
     <h2>{{ country.name.common }} ({{ country.name.official }})</h2>
 
-  <div class="parts">
-   <div class="firstpart">
-     <p><strong>Native Name:</strong> {{ getNativeName(country) }}</p>
-  <p><strong>Population:</strong> {{ country.population | number }}</p>
-  <p><strong>Region:</strong> {{ country.region }}</p>
-  <p><strong>Subregion:</strong> {{ country.subregion }}</p>
-  <p><strong>Capital:</strong> {{ country.capital[0] || 'N/A' }}</p>
-   </div>
-  
- <div class="secontpart">
-  <p><strong>Top level Domain:</strong> {{ country.tld || 'N/A' }}</p>
-  <p><strong>Currencies:</strong> {{ getCurrencyNames(country.currencies) || 'N/A' }}</p>
-  <p><strong>Languages:</strong> {{ getLanguageNames(country.languages) || 'N/A' }}</p>
+    <div class="parts">
+      <div class="firstpart">
+        <p><strong>Native Name:</strong> {{ getNativeName(country) }}</p>
+        <p><strong>Population:</strong> {{ country.population | number }}</p>
+        <p><strong>Region:</strong> {{ country.region }}</p>
+        <p><strong>Subregion:</strong> {{ country.subregion }}</p>
+        <p><strong>Capital:</strong> {{ country.capital[0] || 'N/A' }}</p>
+        <p><strong>Area:</strong> {{ country.area | number }} km²</p>
+        <p><strong>Demonym:</strong> {{ country.demonyms?.eng?.f || 'N/A' }}</p>
+      </div>
+      
+      <div class="secondpart"> <!-- Corrected typo 'secontpart' -->
+        <p><strong>Top Level Domain:</strong> {{ country.tld?.[0] || 'N/A' }}</p>
+        <p><strong>Currencies:</strong> {{ getCurrencyNames(country.currencies) || 'N/A' }}</p>
+        <p><strong>Languages:</strong> {{ getLanguageNames(country.languages) || 'N/A' }}</p>
+        <p><strong>Timezones:</strong> {{ country.timezones?.join(', ') || 'N/A' }}</p>
+        <p><strong>Area Code:</strong> {{ country.idd?.root + (country.idd?.suffixes?.[0] || '') || 'N/A' }}</p>
+        <p><strong>Continents:</strong> {{ country.continents?.join(', ') || 'N/A' }}</p>
+        <p><strong>Landlocked:</strong> {{ country.landlocked ? 'Yes' : 'No' }}</p>
+      </div>
+    </div>
 
-  
- </div>
-
+    <div class="borders">
+      <strong>Border Countries:</strong>
+      <button *ngFor="let border of country.borders" (click)="navigate(border)" class="border-button">
+        {{ border }}
+      </button>
+      <p *ngIf="!country.borders?.length">no borders</p>
+    </div>
   </div>
-  <!-- <p><strong>Languages:</strong> {{ getLanguageNames(country.languages) || 'N/A' }}</p>
-  <p><strong>Borders:</strong> {{ country.borders?.length ? country.borders.join(', ') : 'None' }}</p>
-  <p><strong>Timezones:</strong> {{ country.timezones?.join(', ') || 'N/A' }}</p>
-  <p><strong>Area Code:</strong> {{ country.idd?.root + (country.idd?.suffixes?.[0] || '') || 'N/A' }}</p>
-  <p><strong>Continents:</strong> {{ country.continents?.join(', ') || 'N/A' }}</p>
-  <p><strong>Landlocked:</strong> {{ country.landlocked ? 'Yes' : 'No' }}</p> -->
-
-  <div class="borders">
-  <strong>Border Countries:</strong>
-  <button
-    *ngFor="let border of country.borders"
-    (click)="navigate(border)"
-  >
-    {{ border }}
-  </button>
-  <p *ngIf="!country.borders">no borders</p>
-</div>
-
-
-
-
 </div>
