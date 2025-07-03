@@ -1,0 +1,47 @@
+<section>
+
+ <app-header></app-header>
+
+
+  <div class="searchfilter">
+
+  <div class="search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" (input)="onSearch($event)" placeholder="Search for a country..." />
+
+  </div>
+
+    <select (change)="onFilter($event)">
+    <option value="">All Regions</option>
+    <option value="Africa">Africa</option>
+    <option value="Americas">Americas</option>
+    <option value="Asia">Asia</option>
+    <option value="Europe">Europe</option>
+    <option value="Oceania">Oceania</option>
+  </select>
+
+
+  </div>
+
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+
+  <div class="country-list" *ngIf="filteredCountries?.length">
+    
+    <div *ngFor="let country of filteredCountries" (click)="onCountrySelect(country)" class="country-card">
+      
+      <img [src]="country.flags.png" alt="{{ country.name }} flag" />
+
+      <div class="data">
+      <h3>{{ country.name.common }}</h3>
+      <p><b>Population</b>: {{ country.population }}</p>
+      <p><b>Region:</b> {{ country.region }}</p>
+      <p><b>Capital:</b> {{ country.capital }}</p>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="!loading && !filteredCountries?.length" class="no-results">No countries found.</div>
+</section>

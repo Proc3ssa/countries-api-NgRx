@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+@import './variables';
+@import './mixin';
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700&display=swap');
+
+
+
+body {
+  font-family: 'Nunito Sans', Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s; // Smooth transition
+}
+
+body.light-theme, html.light-theme {
+  background-color: $body-bg-light;
+  color: #000 !important;
+
+  select{
+    background-color: $header-bg-light;
+  }
+
+  header, .country-card, .search, input, select, .themetoggle button, .borders button{
+    background-color: $header-bg-light;
+    color: #000;
+
+    &::placeholder{
+      color: gray;
+    }
+  }
+ 
+}
+
+body.dark-theme, html.dark-theme {
+  background-color: $body-bg-dark;
+  color: #fff !important;
+
+  header, .country-card, .search, input, select, .themetoggle button, .borders button{
+    background-color: $header-bg-dark;
+    color: #fff;
+
+    &::placeholder{
+      color: white;
+    }
+  }
+
+  select{
+    background-color: $header-bg-dark;
+  }
+
+}

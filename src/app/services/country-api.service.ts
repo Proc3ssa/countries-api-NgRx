@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of, map } from 'rxjs'; // Added map import
 import { Country } from '../models/country.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class CountryApiService {
   constructor(private http: HttpClient) {}
 
   getAllCountries(): Observable<Country[]> {
-    return this.http.get<Country[]>(`${this.apiUrl}/all`).pipe(
+    return this.http.get<Country[]>(`${this.apiUrl}/independent?status=true`).pipe(
       catchError(error => {
         console.error('Error fetching countries:', error);
         return of([]);
@@ -21,11 +21,12 @@ export class CountryApiService {
   }
 
   getCountryByCode(code: string): Observable<Country> {
-    return this.http.get<Country>(`${this.apiUrl}/alpha/${code}`).pipe(
+    return this.http.get<Country[]>(`${this.apiUrl}/alpha/${code}`).pipe(
       catchError(error => {
         console.error(`Error fetching country ${code}:`, error);
-        return of({} as Country);
-      })
+        return of([]); // Return empty array on error
+      }),
+      map((countries: Country[]) => countries.length > 0 ? countries[0] : {} as Country) // Explicitly typed countries
     );
   }
 

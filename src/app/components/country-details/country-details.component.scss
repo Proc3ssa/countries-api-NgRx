@@ -1,0 +1,61 @@
+@import '../../../mixin';
+@import '../../../variables';
+
+
+.details {
+  margin-top: 50px;
+  width: 90%;
+  max-width: 1278px;
+  @include align-space-between;
+  margin-inline: auto;
+  flex-wrap: wrap;
+
+  img {
+    width: 100%;
+    height: 405px;
+  }
+
+  p {
+    margin: 10px 0;
+  }
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+button {
+  
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+
+ 
+}
+
+.flagBox{
+  width: 50%;
+
+}
+
+.data{
+ 
+  width: 40%;
+}
+.parts{
+ display: flex;
+ justify-content: space-between;
+}
+
+.borders >*{
+
+  margin-right: 10px;
+}
+
+.borders button{
+  box-shadow: 1px 4px 5px rgba(128, 128, 128, 0.186);
+  border-radius: 5px;
+}
