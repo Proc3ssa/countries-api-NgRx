@@ -22,18 +22,14 @@
         <p><strong>Region:</strong> {{ country.region }}</p>
         <p><strong>Subregion:</strong> {{ country.subregion }}</p>
         <p><strong>Capital:</strong> {{ country.capital[0] || 'N/A' }}</p>
-        <p><strong>Area:</strong> {{ country.area | number }} km²</p>
-        <p><strong>Demonym:</strong> {{ country.demonyms?.eng?.f || 'N/A' }}</p>
+       
       </div>
       
       <div class="secondpart"> <!-- Corrected typo 'secontpart' -->
         <p><strong>Top Level Domain:</strong> {{ country.tld?.[0] || 'N/A' }}</p>
         <p><strong>Currencies:</strong> {{ getCurrencyNames(country.currencies) || 'N/A' }}</p>
         <p><strong>Languages:</strong> {{ getLanguageNames(country.languages) || 'N/A' }}</p>
-        <p><strong>Timezones:</strong> {{ country.timezones?.join(', ') || 'N/A' }}</p>
-        <p><strong>Area Code:</strong> {{ country.idd?.root + (country.idd?.suffixes?.[0] || '') || 'N/A' }}</p>
-        <p><strong>Continents:</strong> {{ country.continents?.join(', ') || 'N/A' }}</p>
-        <p><strong>Landlocked:</strong> {{ country.landlocked ? 'Yes' : 'No' }}</p>
+    
       </div>
     </div>
 

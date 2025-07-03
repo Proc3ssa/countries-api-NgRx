@@ -4,8 +4,8 @@
 This is an Angular application that consumes the REST Countries API to display a list of countries with search and filter capabilities, detailed country information, and theme switching. It follows Angular best practices and uses NgRx for state management.
 
 ## Screenshotes
- ![Screenshot]('./screenshots/all.png')
- ![Screenshot]('./screenshots/country.png')
+ ![Countries]('./screenshots/all.png')
+ ![Country]('./screenshots/country.png')
 
 
 ## Setup & Run Instructions

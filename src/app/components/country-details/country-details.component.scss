@@ -10,6 +10,25 @@
   margin-inline: auto;
   flex-wrap: wrap;
 
+  @media (max-width:900px) {
+    flex-direction: column;
+    width: 100%;
+   
+
+    .flagBox, .data{
+      width: 90%;
+    }
+    
+  }
+
+  @media (max-width:450px) {
+     .parts{
+     
+     flex-direction: column;
+     }
+
+  }
+
   img {
     width: 100%;
     height: 405px;
@@ -56,6 +75,5 @@ button {
 }
 
 .borders button{
-  box-shadow: 1px 4px 5px rgba(128, 128, 128, 0.186);
   border-radius: 5px;
 }
