@@ -54,3 +54,10 @@ Theme switching is managed via NgRx:
 - Create feature branches (e.g., `feature/ngrx-integration`) for new features.
 - Commit changes with descriptive messages (e.g., "Add country list component").
 - Push and create pull requests for review before merging into `main`.
+
+---
+# Author
+-*Faisal Halid Dene*-
+- [proc3ssa](https://github.com/Proc3ssa/)  -Github
+- [processor_911](https://x.com/processor_911/)  -X
+  
