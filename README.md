@@ -3,9 +3,14 @@
 ## Project Description
 This is an Angular application that consumes the REST Countries API to display a list of countries with search and filter capabilities, detailed country information, and theme switching. It follows Angular best practices and uses NgRx for state management.
 
+## Screenshotes
+ ![Screenshot]('./screenshots/all.png')
+ ![Screenshot]('./screenshots/country.png')
+
+
 ## Setup & Run Instructions
-1. Clone the repository: `git clone <your-repo-url>`
-2. Navigate to the project directory: `cd rest-countries-app`
+1. Clone the repository: `git clone https://github.com/proc3ssa/countries-api-NgRx/tree`
+2. Navigate to the project directory: `cd countries-api-NgRx/tree`
 3. Install dependencies: `npm install`
 4. Start the development server: `ng serve`
 5. Open `http://localhost:4200` in your browser.
